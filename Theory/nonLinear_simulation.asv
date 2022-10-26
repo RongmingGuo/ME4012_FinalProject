@@ -25,13 +25,13 @@ tStep = 0.01; % Simulation Step Time = 0.01s. Use 1st order solver
 tEnd = 1; % Simulation Total Time = 20s
 Result = [];
 % t
-% tw(t)
+% tauw(t)
 % phi(t)
 % theta(t)
 for t = 0 : tStep : tEnd
    t
    % Apply feed forward torque
-   tw = 0.01; % constant 10NM
+   tw = 1; % constant 10NM
    % Solving Differential Equations
    A = zeros(2);
    b = zeros(2, 1);
@@ -43,11 +43,8 @@ for t = 0 : tStep : tEnd
    b(2) = L*g*mp*sin(X(2)) - L*mp*sin(X(2))*(- L*cos(X(2))*X(4)^2 + g) - L^2*X(4)^2*mp*cos(X(2))*sin(X(2));
    secondOrder = A\b;
    dX = [X(3); X(4); secondOrder];
-   % Do the update
+   % Do the updateW
    X = X + dX * tStep;
    % Record value
    Result = [Result, [t; tw; X(1); X(2)]];
-   A
-   b
-   dX
 end
