@@ -10,7 +10,7 @@ mw = cart.mw;
 Iw = cart.Iw;
 M = cart.M;
 mp = cart.mp;
-Ip = cart.Ip;
+Icc_p = cart.Icc_p;
 %% Environment Constants
 g = 9.81; % m/s^2, gravitational acceleration
 %% Initial conditions
@@ -22,7 +22,7 @@ X = [0; 0; 0; 0];
 
 %% Simulation Starts
 tStep = 0.01; % Simulation Step Time = 0.01s. Use 1st order solver
-tEnd = 1; % Simulation Total Time = 20s
+tEnd = 10; % Simulation Total Time = 10s
 Result = [];
 % t
 % tw(t)
@@ -31,7 +31,7 @@ Result = [];
 for t = 0 : tStep : tEnd
    t
    % Apply feed forward torque
-   tw = 0.01; % constant 10NM
+   tw = sin(10 * t) * 0.03; % oscillating 0.5 nm
    % Solving Differential Equations
    A = zeros(2);
    b = zeros(2, 1);
@@ -39,15 +39,21 @@ for t = 0 : tStep : tEnd
    A(1, 2) = (L*R*mp*cos(X(2)))/4;
    b(1) = (L*R*mp*sin(X(2))*X(4)^2)/4 + tw; % EOM1
    A(2, 1) = -L*R*mp*cos(X(2));
-   A(2, 2) = Ip - L^2*mp*cos(X(2))^2 - L^2*mp*sin(X(2))^2;
-   b(2) = L*g*mp*sin(X(2)) - L*mp*sin(X(2))*(- L*cos(X(2))*X(4)^2 + g) - L^2*X(4)^2*mp*cos(X(2))*sin(X(2));
+   A(2, 2) = Icc_p - L^2*mp*cos(X(2))^2 - L^2*mp*sin(X(2))^2;
+   b(2) = 0;
    secondOrder = A\b;
    dX = [X(3); X(4); secondOrder];
    % Do the update
    X = X + dX * tStep;
    % Record value
    Result = [Result, [t; tw; X(1); X(2)]];
-   A
-   b
-   dX
+end
+
+%% Simulate Results
+qall = Result(3:4, :);
+[~, n] = size(qall);
+for i = 1 : n
+    plotCart(qall(:, i), cart);
+    pause(tStep);
+    clf;
 end
