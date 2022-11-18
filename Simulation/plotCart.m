@@ -5,11 +5,11 @@ function [] = plotCart(q, cart)
     theta = q(2);
     x = phi * cart.R;
     % Plot ground
-    ground = plot([-1, 1], [0, 0], 'k', 'LineWidth', 2);
+    ground = plot([-10, 10], [0, 0], 'k', 'LineWidth', 2);
     grid on
     hold on
     axis equal
-    % xlim([-1, 1]);
+    xlim([x - 1, x + 1]);
     ylim([-0.1, 0.9]);
     % Plot Wheels
     wheels = plot([x - cart.a - cart.b, x + cart.a + cart.b], [cart.R, cart.R], 'k.', 'MarkerSize', 80);
