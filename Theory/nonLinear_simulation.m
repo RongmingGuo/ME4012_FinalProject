@@ -31,7 +31,7 @@ Result = [];
 for t = 0 : tStep : tEnd
    t
    % Apply feed forward torque
-   tw = 0.3 * (X(2)) + 0.1 * (X(4)); % PD
+   tw = 2 * (X(2)) + 0.1 * (X(4)); % PD
    % Solving Differential Equations
    A = zeros(2);
    b = zeros(2, 1);
