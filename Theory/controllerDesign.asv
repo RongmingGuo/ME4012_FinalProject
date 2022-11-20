@@ -1,0 +1,10 @@
+%%
+clear;
+clc;
+close all;
+%%
+s = tf('s');
+%% Load Cart
+cartInit;
+%% Plant Transfer Function G(s)
+G = 1 / ((cart.Iw + ((cart.M + cart.mp) * cart.R^2/4)) * (cart.Icc_p + cart.mp * cart.L^2) / (cart.mp *)) * s^2 - ());

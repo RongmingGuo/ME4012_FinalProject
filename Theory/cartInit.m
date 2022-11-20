@@ -2,10 +2,10 @@
 cart = struct();
 %% Geometry
 cart.a = 0.1; % m, half-chassis length
-cart.b = 0.015; % m, extension of wheel from chassis
-cart.R = 0.045; % m, radius of the wheel
-cart.H = 0.07; % m, chassis ground clerance
-cart.h = 0.2; % m, pole height
+cart.b = 0.005; % m, extension of wheel from chassis
+cart.R = 0.03; % m, radius of the wheel
+cart.H = 0.054; % m, chassis ground clerance
+cart.h = 0.04; % m, pole height
 cart.L = 0.15; % m, half pendulum arm length
 %% Dynamics
 cart.mw = 0.1; % kg, mass of the wheel

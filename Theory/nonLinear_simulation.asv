@@ -18,15 +18,15 @@ Icc_p = cart.Icc_p;
 %% Environment Constants
 g = 9.81; % m/s^2, gravitational acceleration
 %% Initial conditions
-X = [0; 0; 0; 0];
+X = [0; 0.5; 0; 0];
 % [phi;
 % theta;
 % phi_dot;
 % theta_dot];
 
 %% Simulation Starts
-tStep = 0.001; % Simulation Step Time = 0.01s. Use 1st order solver
-tEnd = 0.1; % Simulation Total Time = 0.1s
+tStep = 0.01; % Simulation Step Time = 0.01s. Use 1st order solver
+tEnd = 10; % Simulation Total Time = 10s
 Result = [];
 % t
 % tw(t)
@@ -35,7 +35,7 @@ Result = [];
 for t = 0 : tStep : tEnd
    t
    % Apply feed forward torque
-   tw = 1; % unit step
+   tw = sin
    % 2 * (X(2)) + 0.1 * (X(4)); % PD
    % Solving Differential Equations
    A = zeros(2);
@@ -62,12 +62,3 @@ for i = 1 : n
     pause(tStep);
     clf;
 end
-
-%% Plots
-figure(2);
-plot(0 : tStep : tEnd, (-1) * Result(4, :)); % plot theta
-grid on
-hold on
-ylim([0, 3.5]);
-plot(0 : tStep : tEnd, Result(2, :)); % plot input torque
-legend('theta(t)', 'tau(t)');
