@@ -1,0 +1,12 @@
+6mmShaft * 3 (precision print)
+centralShaftsecurer * 3 (precision print)
+connector * 2 (precision print)
+Pole_version2 * 2 (regular print)
+shaft * 1(regular print)
+wheelAttacher * 3 (precision print)
+wheelAttacher2 * 3 (precision print)
+mainBoard * 1 (regular print)
+wheel * 6 (regular print)
+
+** NOTE ** 
+Try to orient the parts so that the least amount of support is required :)

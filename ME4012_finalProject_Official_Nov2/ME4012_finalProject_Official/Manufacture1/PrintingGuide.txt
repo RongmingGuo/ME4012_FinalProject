@@ -1,0 +1,5 @@
+centralShaftSecurer * 4
+connector * 2
+motorMount *3
+pendulumShaft * 1
+Pole_version2 * 3
