@@ -18,7 +18,7 @@ Icc_p = cart.Icc_p;
 %% Environment Constants
 g = 9.81; % m/s^2, gravitational acceleration
 %% Initial conditions
-X = [0; 0; 0; 0];
+X = [0; 0.2; 0; 0];
 % [phi;
 % theta;
 % phi_dot;
@@ -26,7 +26,7 @@ X = [0; 0; 0; 0];
 
 %% Simulation Starts
 tStep = 0.001; % Simulation Step Time = 0.01s. Use 1st order solver
-tEnd = 0.1; % Simulation Total Time = 0.1s
+tEnd = 10; % Simulation Total Time = 0.1s
 Result = [];
 % t
 % tw(t)
@@ -35,8 +35,18 @@ Result = [];
 for t = 0 : tStep : tEnd
    t
    % Apply feed forward torque
-   tw = 1; % unit step
-   % 2 * (X(2)) + 0.1 * (X(4)); % PD
+   % tw = 1; % unit step
+   X_noise = X + 0.2 * (0.5 - rand(4, 1)); % sensor noise
+   tw = 0.4143 * (X_noise(4) + 13.37 * X_noise(2)); % PD Controller
+   tw = tw + 0.05 * (0.5 - rand());
+   % At t = 5 - 5.1, apply external push
+   if (t >= 3 && t <= 3.1)
+      tw = tw - 1; 
+   end
+   
+   if (t >= 5 && t <= 5.5)
+      tw = tw + 1.5; 
+   end
    % Solving Differential Equations
    A = zeros(2);
    b = zeros(2, 1);
@@ -54,20 +64,35 @@ for t = 0 : tStep : tEnd
    Result = [Result, [t; tw; X(1); X(2)]];
 end
 
-%% Simulate Results
+%% Simulate Results & Make Video
 qall = Result(3:4, :);
 [~, n] = size(qall);
-for i = 1 : n
+
+% Make video
+v = VideoWriter('simulatedCart.avi');
+open(v);
+for i = 1 : 20 : n
+    Result(1, i) % print time
     plotCart(qall(:, i), cart);
+    % Make video
+    frame = getframe(gcf);
+    writeVideo(v, frame);
     pause(tStep);
     clf;
 end
+
+close(v);
 
 %% Plots
 figure(2);
 plot(0 : tStep : tEnd, (-1) * Result(4, :)); % plot theta
 grid on
 hold on
-ylim([0, 3.5]);
+ylim([-1, 3.5]);
+legend('theta(t)');
+figure(3);
 plot(0 : tStep : tEnd, Result(2, :)); % plot input torque
-legend('theta(t)', 'tau(t)');
+grid on
+hold on
+ylim([-1, 3.5]);
+legend('tau(t)');

@@ -12,7 +12,7 @@ function [] = plotCart(q, cart)
     xlim([x - 1, x + 1]);
     ylim([-0.1, 0.9]);
     % Plot Wheels
-    wheels = plot([x - cart.a - cart.b, x + cart.a + cart.b], [cart.R, cart.R], 'k.', 'MarkerSize', 40);
+    wheels = plot([x - cart.a - cart.b, x + cart.a + cart.b], [cart.R, cart.R], 'k.', 'MarkerSize', 70);
     wheelLine1 = plot([x - cart.a - cart.b, x - cart.a - cart.b + cart.R * cos(-phi)], [cart.R, cart.R + cart.R * sin(-phi)], 'w', 'LineWidth', 0.5);
     wheelLine2 = plot([x + cart.a + cart.b, x + cart.a + cart.b + cart.R * cos(-phi)], [cart.R, cart.R + cart.R * sin(-phi)], 'w', 'LineWidth', 0.5);
     % Plot cart chassis
